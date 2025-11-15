@@ -45,7 +45,7 @@ justify-content:center;
 const CardWrapper = styled.div`
 display:grid;
 gap:20px;
-@media(max-width:1200px){
+@media(min-width:1200px){
 grid-template-columns:repeat(4,1fr);
 }
 @media  (min-width:640px)  and (max-width:1199px){
@@ -63,6 +63,13 @@ const Home = () => {
         <SearchBar />
         <Wrapper>
           <CardWrapper>
+            <ImageCard />
+            <ImageCard />
+            <ImageCard />
+            <ImageCard />
+            <ImageCard />
+            <ImageCard />
+            <ImageCard />
             <ImageCard/>
           </CardWrapper>
         </Wrapper>
