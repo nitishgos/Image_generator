@@ -56,6 +56,11 @@ grid-template-columns:repeat(2,1fr);
 }
 `;
 const Home = () => {
+  const item = {
+    photo: "https://www.bing.com/th/id/OIP.7jpR1fZDpLLZXmA3eKv-_AHaFC?w=254&h=211&c=8&rs=1&qlt=90&o=6&cb=ucfimg1&pid=3.1&rm=2&ucfimg=1",
+    author: "Nitish",
+    prompt: "Hey Prompt! ",
+  };
     return (
       <Container>
         <Headline>Explore popular posts in the Community! Generated with AI</Headline>
@@ -63,14 +68,14 @@ const Home = () => {
         <SearchBar />
         <Wrapper>
           <CardWrapper>
-            <ImageCard />
-            <ImageCard />
-            <ImageCard />
-            <ImageCard />
-            <ImageCard />
-            <ImageCard />
-            <ImageCard />
-            <ImageCard/>
+            <ImageCard item={item} />
+            <ImageCard item={item} />
+            <ImageCard item={item} />
+            <ImageCard item={item} />
+            <ImageCard item={item} />
+            <ImageCard item={item} />
+            <ImageCard item={item} />
+            <ImageCard item={item} />
           </CardWrapper>
         </Wrapper>
       </Container>

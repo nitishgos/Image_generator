@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { Avatar } from '@mui/material';
 import { DownloadRounded } from '@mui/icons-material';
-import { FileSaver } from "file-saver";
+import  FileSaver  from "file-saver";
 const Card = styled.div`
 position:relative;
 display:flex;
@@ -63,7 +63,7 @@ color:${({ theme }) => theme.white};
 const ImageCard = ({item}) => {
   return (
       <Card>
-          <LazyLoadImage width="100%" src="https://www.bing.com/th/id/OIP.7jpR1fZDpLLZXmA3eKv-_AHaFC?w=254&h=211&c=8&rs=1&qlt=90&o=6&cb=ucfimg1&pid=3.1&rm=2&ucfimg=1" />
+      <LazyLoadImage alt={item?.prompt} style={{borderRadius:"12px"}} width="100%" src={item?.photo} />
           <HoverOverlay>
         <Prompt>{item?.prompt }</Prompt>
         <div style={{
@@ -74,7 +74,6 @@ const ImageCard = ({item}) => {
         }}>
            <Author>
             <Avatar sx={{ width: "32px", height: "32px" }}>{item?.author[0]}
-              +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
             </Avatar>
             {item?.author}
           </Author>
