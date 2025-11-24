@@ -1,8 +1,8 @@
-import React from 'react'
-import style from 'styled-components'
-import Button from './button'
-import TextInput from './TextInput'
-import { AutoAwesome, CreateRounded } from '@mui/icons-material'
+import React from "react";
+import style from "styled-components";
+import Button from "./button";
+import TextInput from "./TextInput";
+import { AutoAwesome, CreateRounded } from "@mui/icons-material";
 const Form = style.div`
 flex: 1;
 padding: 16px 20px;
@@ -34,24 +34,70 @@ const Action = style.div`
 flex: 1;
 display: flex;
 gap: 8px;`;
-const GenerateImageForm = () => {
-    return (
-        <Form>
-            <Top>
-                <Title>Generate Image with prompt</Title>
-                <Desc>Write your prompt according to the image you want to generate!</Desc>
-            </Top>
-            <Body>
-                <TextInput label="Author" placeholder="Enter your name...." name="name" />
-                <TextInput label="Prompt" placeholder="write the detailed prompt about image....." name="name" rows="8" textArea />
-                **You can post the AI Generated Image to the Community**
-            </Body>
-            <Action>
-                <Button text="Generate Image" flex leftIcon={<AutoAwesome />} />
-                <Button text="Generate Image" type="secondary" flex leftIcon={<CreateRounded/>}/>
-            </Action>
-        </Form>
-    );
-}
+const GenerateImageForm = ({
+  post,
+  setPost,
+  createPostLoading,
+  setcreatePostLoading,
+  generateImageLoading,
+  setGenerateImageLoading,
+}) => {
+    const generateImageFun = () => {
+        setGenerateImageLoading(true);
+    }
+    const createPostFun=() => {
+        setcreatePostLoading(true);
+    }
+  return (
+    <Form>
+      <Top>
+        <Title>Generate Image with prompt</Title>
+        <Desc>
+          Write your prompt according to the image you want to generate!
+        </Desc>
+      </Top>
+      <Body>
+        <TextInput
+          label="Author"
+          placeholder="Enter your name...."
+          name="name"
+          value={post.name}
+          handelChange={(e) => setPost({ ...post, name: e.target.value })}
+        />
+        <TextInput
+          label="Image Prompt"
+          placeholder="write the detailed prompt about image....."
+          name="name"
+          rows="8"
+          textArea
+          value={post.prompt}
+          handelChange={(e) => setPost({ ...post, prompt: e.target.value })}
+        />
+        **You can post the AI Generated Image to the Community**
+      </Body>
+      <Action>
+              <Button
+                  text="Generate Image"
+                  flex
+                  leftIcon={<AutoAwesome />}
+                  isLoading={generateImageLoading}
+                  isDisabled={post.prompt === ""}
+                  onClick={()=>{generateImageFun()}}
+              />
+        <Button
+          text="Post Image"
+          type="secondary"
+          flex
+          leftIcon={<CreateRounded />}
+          isLoading={createPostLoading}
+          isDisabled={
+            post.name === "" || post.prompt === "" || post.photo === ""
+          }
+          onClick={()=>{createPostFun()}}
+        />
+      </Action>
+    </Form>
+  );
+};
 
-export default GenerateImageForm
+export default GenerateImageForm;

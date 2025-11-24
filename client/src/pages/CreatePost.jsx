@@ -30,7 +30,7 @@ const Wrapper = styled.div`
 `;
 const CreatePost = () => {
   const [post, setPost] = useState({
-    author: "",
+    name: "",
     prompt: "",
     photo: "",
   });
