@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-const PostSchema = new new mongoose.Schema({
+const PostSchema =  new mongoose.Schema({
     name: {
         type: String,
         required: true,
@@ -13,5 +13,5 @@ const PostSchema = new new mongoose.Schema({
         required: true,
     },
 });
-const Post = mongoose.model("post", PostSchema);
+const Post = mongoose.model("Post", PostSchema);
 export default Post;
