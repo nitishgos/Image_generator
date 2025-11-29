@@ -3,6 +3,9 @@ import style from "styled-components";
 import Button from "./button";
 import TextInput from "./TextInput";
 import { AutoAwesome, CreateRounded } from "@mui/icons-material";
+import { CreatePost, GenerateAIImage } from "../api/index.js";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 const Form = style.div`
 flex: 1;
 padding: 16px 20px;
@@ -42,12 +45,35 @@ const GenerateImageForm = ({
   generateImageLoading,
   setGenerateImageLoading,
 }) => {
-    const generateImageFun = () => {
-        setGenerateImageLoading(true);
-    }
-    const createPostFun=() => {
-        setcreatePostLoading(true);
-    }
+  const navigate = useNavigate();
+  const [error, setError] = useState("");
+  const generateImageFun = async () => {
+    setGenerateImageLoading(true);
+    await GenerateAIImage({ prompt: post.prompt })
+      .then((res) => {
+        setPost({
+          ...post,
+          photo: `data:image/jpge;base64,${res?.data?.photo}`,
+        });
+        setGenerateImageLoading(false);
+      })
+      .catch((error) => {
+        setError(error?.response?.data?.message);
+        setGenerateImageLoading(false);
+      });
+  };
+  const createPostFun = async () => {
+    setcreatePostLoading(true);
+    await CreatePost(post)
+      .then((res) => {
+        setcreatePostLoading(false);
+        navigate("/");
+      })
+      .catch((error) => {
+        setError(error?.response?.data?.message);
+        setcreatePostLoading(false);
+      });
+  };
   return (
     <Form>
       <Top>
@@ -73,17 +99,20 @@ const GenerateImageForm = ({
           value={post.prompt}
           handelChange={(e) => setPost({ ...post, prompt: e.target.value })}
         />
+        {error && <div style={{ color: "red" }}>{error}</div>}
         **You can post the AI Generated Image to the Community**
       </Body>
       <Action>
-              <Button
-                  text="Generate Image"
-                  flex
-                  leftIcon={<AutoAwesome />}
-                  isLoading={generateImageLoading}
-                  isDisabled={post.prompt === ""}
-                  onClick={()=>{generateImageFun()}}
-              />
+        <Button
+          text="Generate Image"
+          flex
+          leftIcon={<AutoAwesome />}
+          isLoading={generateImageLoading}
+          isDisabled={post.prompt === ""}
+          onClick={() => {
+            generateImageFun();
+          }}
+        />
         <Button
           text="Post Image"
           type="secondary"
@@ -93,7 +122,9 @@ const GenerateImageForm = ({
           isDisabled={
             post.name === "" || post.prompt === "" || post.photo === ""
           }
-          onClick={()=>{createPostFun()}}
+          onClick={() => {
+            createPostFun();
+          }}
         />
       </Action>
     </Form>

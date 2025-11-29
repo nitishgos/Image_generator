@@ -13,7 +13,7 @@ cursor:pointer;
 gap:6px;
 align-items:center;
 `;
-const SearchBar = () => {
+const SearchBar = ({search,setSearch}) => {
     return (
         <SearchBarContainer>
             <SearchOutlined/>
@@ -26,7 +26,10 @@ const SearchBar = () => {
                     color: "inherit",
                     fontSize:"16px",
                     background:"transparent"
-                }}/>
+                }}
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+            />
       </SearchBarContainer>
   )
 }
